@@ -19,6 +19,7 @@ function LandingMainComponent() {
                 <p className='text-white'>Search your desire pet through the Awesome pet Store</p>
 
             </div>
+
         </div>
 
         <div className=' flex flex-col mx-[120px] mt-[100px]'>
