@@ -1,8 +1,12 @@
+import Navbar from "./Customer/HeaderFooter/Navbar";
+import LandingMainComponent from "./Customer/LandingPage/LandingMainComponent";
 
 function App() {
   return (
     <>
-    <div className="text-2xl text-red font-bold">Hello from Diwash Bhatta</div></>
+    <Navbar/>
+    <LandingMainComponent/>
+    </>
   );
 }
 
