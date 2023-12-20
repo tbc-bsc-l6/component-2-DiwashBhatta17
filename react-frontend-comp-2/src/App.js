@@ -1,6 +1,8 @@
 import Navbar from "./Pages/Customer/HeaderFooter/Navbar";
+import Landing2ndComp from "./Pages/Customer/LandingPage/Landing2ndComp";
 import LandingMainComponent from "./Pages/Customer/LandingPage/LandingMainComponent";
 import Login from "./Pages/Customer/LoginSignupPage/Login";
+import Signup from "./Pages/Customer/LoginSignupPage/Signup";
 
 
 function App() {
@@ -8,7 +10,9 @@ function App() {
     <>
     {/* <Navbar/> */}
     {/* <LandingMainComponent/> */}
-    <Login/>
+    {/* <Login/> */}
+    <Landing2ndComp/>
+    {/* <Signup/> */}
     </>
   );
 }

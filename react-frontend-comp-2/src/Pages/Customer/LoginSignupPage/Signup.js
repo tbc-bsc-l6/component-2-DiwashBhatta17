@@ -1,8 +1,6 @@
 import React from "react";
-import img from "../Images/Rectangle 4365.png";
 import { useState, useEffect } from "react";
-import flag from "../../Pet_Images/puppies.jpg";
-import signupService from "../../Services/Login/signupService";
+import flag from "../../Pet_Images/puppies_signup_png.png";
 import logo from "../../Pet_Images/puppies.jpg";
 import { Spinner } from "@chakra-ui/react";
 
@@ -15,7 +13,7 @@ function Signup(props) {
     phone: "",
     confirmPassword: "",
   });
-
+  const [signup, setsignup] = useState(true);
   const [errorMessage, setErrormessage] = useState("");
   const [redirectToOTP, setRedirectToOTP] = useState(false);
 
@@ -45,14 +43,14 @@ function Signup(props) {
         phone: signupData.phone,
       };
 
-      try {
-        setSpinner(true);
-        const response = await signupService(data);
-        console.log("response", response);
-        setRedirectToOTP(true);
-      } catch (error) {
-        console.error(error);
-      }
+      //   try {
+      //     setSpinner(true);
+      //     const response = await signupService(data);
+      //     console.log("response", response);
+      //     setRedirectToOTP(true);
+      //   } catch (error) {
+      //     console.error(error);
+      //   }
     }
     setSignupdata({
       ...signupData,
@@ -86,36 +84,34 @@ function Signup(props) {
   //     dispatch(setlogin(true));
   //     dispatch(setSignup(false));
   //   }
-  return props.signup ? (
+  return signup ? (
     <div className="flex z-40 top-0 left-0 w-full justify-center fixed items-center h-screen dhamilo">
-      <div className=" bg-white h-[580px] w-[480px] overflow-hidden flex flex-col ">
-        <div className=" h-[100px] border-[#a03636]">
+      <div className=" bg-white h-[480px] w-[680px] flex flex-col ">
+        <div className=" h-[100px] flex justify-center border-[#a03636]">
           <img
-            className=" relative -top-[480px] w-[600px] h-[600px] "
+            className=" relative -top-[84px] h-[200px] w-[900px]"
             src={flag}
             alt=""
           />
         </div>
-        <div className="mb-4 flex  pl-4">
+       <div className=" flex mr-10 justify-end ">
           <button onClick={() => props.setSignup(false)}>
-            <i className="absolute  top-[150px]   text-2xl focus:text-yellow-50 text-black   fa-solid fa-xmark"></i>
+          <i className="absolute text-right top-[230px]  text-2xl focus:text-yellow-50 text-black   fa-solid fa-xmark"></i>
           </button>
         </div>
 
-        <div className=" justify-end items-center flex-col mt-2 mb-6 flex">
-          <img className="w-[50%] pt-[0px]" src={logo} alt="" />
-          <div
-            className=" text-center  rounded-lg alert-danger mb-  "
-            role="alert"
-          >
+        <div className=" justify-end items-center flex-col mx- ml-5 mb-6 flex">
+        <h1 className="text-3xl text-[#f18f4e] font-bold">Signup</h1>
+          <div className=" text-center  rounded-lg alert-danger" role="alert">
             {errorMessage}
           </div>
-          <div className="flex mb-1 ">
-            <div className="">
+
+          <div className="flex w-full justify-around mb-1 ">
+            <div className="w-[90%]">
               <label className="text-black mb-1 mt-2">Name</label>
               <br />
               <input
-                className="border-[1px] bg-[#ec26336a] w-[90%] rounded-lg  py-1 px-1  border-black"
+                className="border-[1px] bg-[#e4ab0036] w-[90%] rounded-lg py-1 px-1 border-black"
                 type="text"
                 placeholder=" Your Name"
                 name="name"
@@ -123,11 +119,11 @@ function Signup(props) {
                 onChange={handelChange}
               ></input>
             </div>
-            <div>
+            <div className="w-[90%]">
               <label className="text-black mb-1 mt-2">Username</label>
               <br />
               <input
-                className="border-[1px] bg-[#ec26336a] w-[90%] py-1 px-1 rounded-lg border-black"
+                className="border-[1px]  bg-[#e4ab0036] w-[90%] py-1 px-1 rounded-lg border-black"
                 type="text"
                 placeholder=" Your Username"
                 name="username"
@@ -136,12 +132,12 @@ function Signup(props) {
               ></input>
             </div>
           </div>
-          <div className="flex mb-1">
-            <div className="">
+          <div className="flex mb-1 w-full">
+            <div className="w-[90%]">
               <label className="text-black  mb-1 mt-2">Email</label>
               <br />
               <input
-                className="border-[1px] bg-[#ec26336a] w-[90%] rounded-lg px-1 py-1  border-black"
+                className="border-[1px]  bg-[#e4ab0036] w-[90%] rounded-lg px-1 py-1  border-black"
                 type="email"
                 placeholder=" domain@gmail.com"
                 name="email"
@@ -149,11 +145,11 @@ function Signup(props) {
                 onChange={handelChange}
               ></input>
             </div>
-            <div>
+            <div className="w-[90%]">
               <label className="text-black mb-1 mt-2">Phone Number</label>
               <br />
               <input
-                className="border-[1px] bg-[#ec26336a] w-[90%] px-1 py-1 rounded-lg border-black"
+                className="border-[1px]  bg-[#e4ab0036] w-[90%] px-1 py-1 rounded-lg border-black"
                 type="text"
                 placeholder=" (977)-9812346789"
                 name="phone"
@@ -162,12 +158,12 @@ function Signup(props) {
               ></input>
             </div>
           </div>
-          <div className="flex mb-1">
-            <div className="">
+          <div className="flex mb-1 w-full ">
+            <div className="w-[90%]">
               <label className="text-black mb-1 mt-2">Password</label>
               <br />
               <input
-                className="bg-[#ec26336a] border-[1px] w-[90%] rounded-lg  py-1 px-1 border-black"
+                className=" bg-[#e4ab0036] border-[1px] w-[90%] rounded-lg  py-1 px-1 border-black"
                 type="password"
                 placeholder=" ********"
                 name="password"
@@ -175,11 +171,11 @@ function Signup(props) {
                 onChange={handelChange}
               ></input>
             </div>
-            <div>
+            <div className="w-[90%]">
               <label className="text-black mb-1 mt-2">Confirm Password</label>
               <br />
               <input
-                className="border-[1px] bg-[#ec26336a] w-[90%] py-1 px-1 rounded-lg border-black"
+                className="border-[1px]  bg-[#e4ab0036] w-[90%] py-1 px-1 rounded-lg border-black"
                 type="password"
                 placeholder=" ********"
                 name="confirmPassword"
@@ -188,10 +184,10 @@ function Signup(props) {
               ></input>
             </div>
           </div>
-          <div className="mt-5 text-center w-full ">
+          <div className="mt-4  text-center w-full ">
             <button
               onClick={handelClick}
-              className="mr-[10px] hover:bg-[#5672d7]  bg-[#EC2633] active:bg-[#88b7ed] w-[365px] py-2 rounded-lg text-white "
+              className=" hover:bg-[#dee963] mr-8 text-[#f18f4e] active:bg-[#d7b22a] bg-[#f18f4e]  w-[95%] py-2 rounded-lg text-white "
             >
               Register{" "}
               <p className="absolute -mt-[23px] ml-5">
@@ -200,10 +196,10 @@ function Signup(props) {
               </p>
             </button>
           </div>
-          <div className="flex mt-2 w-[365px] justify-between ">
+          <div className="flex mt-2 w-[90%] justify-between ">
             <p>Already have an account?</p>
             <a to="#">
-              <button className="text-[#2181F1] hover:text-[#4c7bb9]">
+              <button className="hover:text-[#dee963] text-[#f18f4e]">
                 Login?
               </button>
             </a>
