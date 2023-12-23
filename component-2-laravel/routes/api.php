@@ -27,6 +27,7 @@ Route::get('/users/{id}',[UserController::class, 'findUserById']);
 //To register the user
 Route::post('/create',[UserController::class,'store']);
 
-
+//Routes for the petController
 Route::get('/pets',[PetController::class,'index']);
+Route::post('/pets/create',[PetController::class,'store']);
 
