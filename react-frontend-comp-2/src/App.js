@@ -8,8 +8,8 @@ import Signup from "./Pages/Customer/LoginSignupPage/Signup";
 function App() {
   return (
     <>
-    {/* <Navbar/> */}
-    {/* <LandingMainComponent/> */}
+    <Navbar/>
+    <LandingMainComponent/>
     {/* <Login/> */}
     <Landing2ndComp/>
     {/* <Signup/> */}

@@ -31,7 +31,9 @@ class UserController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
+            'role' => 'integer|max:255',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
@@ -46,6 +48,8 @@ class UserController extends Controller
             \Log::info('Before user creation');
             $user = User::create([
                 'name' => $validatedData['name'],
+                'username' => $validatedData['username'],
+                'role' => $validatedData['role'],
                 'email' => $validatedData['email'],
                 'password' => Hash::make($validatedData['password']),
             ]);
@@ -60,7 +64,7 @@ class UserController extends Controller
         }
     }
 
-    
+
 
 
 
