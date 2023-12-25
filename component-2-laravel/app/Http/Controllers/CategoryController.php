@@ -33,7 +33,8 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = Category::find($id);
+        return response()->json(['category'=>$category],200);
     }
 
     /**
@@ -41,7 +42,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validateData = $request->validate([
+            'category_name'=>'required|string',
+        ]);
+
+        $category = Category::find($id);
+        $category-> category_name = $validateData['category_name'];
+        $category->save();
+
+        return response()->json(["message"=>"Category Update a Successfully"],200);
+
     }
 
     /**
@@ -49,6 +59,11 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $delete = Category::destroy($id);
+        if($delete=== 0){
+            return response()->json(['message'=>'user not found'],404);
+        }
+
+        return response()->json(['message'=>'Category deleted a successfully'],200);
     }
 }
