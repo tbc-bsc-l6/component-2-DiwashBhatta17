@@ -3,6 +3,8 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WishlistController;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +37,10 @@ Route::post('/pets/create',[PetController::class,'store']);
 
 Route::post('/category/create',[CategoryController::class,'store']);
 Route::get('category',[CategoryController::class,'index']);
+
+//Wishlist Routes
+Route::get('/wishlist/{userId}',[WishlistController::class,'getByuserId']); //get wishlist through userId
+Route::post('/wishlist/add',[WishlistController::class,'addToWishlist']);   // add to the wishlist
+Route::delete('/wishlist/remove/{id}',[WishlistController::class,'destroy']); //delete from the wishlist
+
 
