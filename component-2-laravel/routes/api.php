@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -30,4 +31,8 @@ Route::post('/create',[UserController::class,'store']);
 //Routes for the petController
 Route::get('/pets',[PetController::class,'index']);
 Route::post('/pets/create',[PetController::class,'store']);
+
+
+Route::post('/category/create',[CategoryController::class,'store']);
+Route::get('category',[CategoryController::class,'index']);
 

@@ -58,7 +58,7 @@ class PetController extends Controller
         }
 
         // Create a new pet record
-        $pet = Pet::create($validatedData);
+        Pet::create($validatedData);
 
         return response()->json(['message' => 'Pet created successfully'], 201);
     }
