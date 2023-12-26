@@ -10,8 +10,8 @@ function LandingMainComponent() {
       </video>
       {/* Your content goes here */}
       <div className='content h-screen dhamilo'>
-        <div className="h-[35vh] flex-col ">
-            <div className="flex flex-col gap-1 items-center justify-end h-full">
+        <div className="h-[100vh] flex-col ">
+            <div className="flex flex-col gap-1 items-center justify-center h-full">
                 <div className='flex items-center'>
                 <input className='bg-[#fbfafa41] outline-none pl-2 text-white rounded-xl w-[640px] h-[40px]' type="text" />
                 <i className=' text-[#e77e46] fa fa-search -ml-6'></i>
@@ -22,10 +22,10 @@ function LandingMainComponent() {
 
         </div>
 
-        <div className=' flex flex-col mx-[120px] mt-[100px]'>
+        {/* <div className=' flex flex-col mx-[120px] mt-[100px]'>
             <img className='w-[50%]' src={logo2} alt="" />
             <p className='text-white ml-[100px] text-xl -mt-[70px]'>Because every pet deservs the best.</p>
-        </div>
+        </div> */}
         {/* Place your other components or content here */}
         {/* Other content */}
       </div>

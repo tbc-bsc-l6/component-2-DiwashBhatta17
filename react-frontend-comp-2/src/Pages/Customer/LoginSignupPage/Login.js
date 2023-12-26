@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 // } from "../../Services/Redux-Service/counterSlice";
 // import { toast } from "react-toastify";
 
-function Login() {
+function Login(props) {
   // const navigate = useNavigate();
   // const dispatch = useDispatch();
 
@@ -83,7 +83,7 @@ function Login() {
     loggedin();
   }
 
-  return login ? (
+  return props.login ? (
     <>
       <div className="flex z-40 top-0 left-0 w-full justify-center fixed items-center h-screen dhamilo">
         <div className=" bg-[#fff] w-[770px] w-[750px] h-[500px] flex ">
@@ -100,7 +100,7 @@ function Login() {
           {/* ist one */}
           <div className="justify-center flex-col w-[60%] p-5 flex">
             <div className="mb-4 flex justify-end pt-4">
-              <button onClick={() => setlogin(false)}>
+              <button onClick={() => props.setLogin(false)}>
                 <i className="absolute text-right top-[150px]  text-2xl focus:text-yellow-50 text-black   fa-solid fa-xmark"></i>
               </button>
             </div>

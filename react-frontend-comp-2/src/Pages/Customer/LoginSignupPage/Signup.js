@@ -84,7 +84,7 @@ function Signup(props) {
   //     dispatch(setlogin(true));
   //     dispatch(setSignup(false));
   //   }
-  return signup ? (
+  return props.signup ? (
     <div className="flex z-40 top-0 left-0 w-full justify-center fixed items-center h-screen dhamilo">
       <div className=" bg-white h-[480px] w-[680px] flex flex-col ">
         <div className=" h-[100px] flex justify-center border-[#a03636]">
