@@ -30,6 +30,9 @@ Route::get('/users/{id}',[UserController::class, 'findUserById']);
 //To register the user
 Route::post('/create',[UserController::class,'store']);
 
+//OTP email veification
+Route::post('/otp',[UserController::class,'otpValidation']);
+
 //Routes for the petController
 Route::get('/pets',[PetController::class,'index']);
 Route::post('/pets/create',[PetController::class,'store']);

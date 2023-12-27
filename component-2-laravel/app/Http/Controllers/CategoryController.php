@@ -60,7 +60,7 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         $delete = Category::destroy($id);
-        if($delete=== 0){
+        if($delete=== 0) {
             return response()->json(['message'=>'user not found'],404);
         }
 

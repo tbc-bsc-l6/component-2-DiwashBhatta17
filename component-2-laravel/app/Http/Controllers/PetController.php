@@ -29,6 +29,7 @@ class PetController extends Controller
 // Helper function to generate image URL
     private function getImageUrl($imageName)
     {
+
         // Replace 'public/images/' with the actual path to your images within the storage directory
         return Storage::url('images/' . $imageName);
     }
