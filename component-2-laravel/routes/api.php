@@ -29,6 +29,7 @@ Route::get('/users/{id}',[UserController::class, 'findUserById']);
 
 //To register the user
 Route::post('/create',[UserController::class,'store']);
+Route::post('/login',[UserController::class,'loginUser']);
 
 //OTP email veification
 Route::post('/otp',[UserController::class,'otpValidation']);

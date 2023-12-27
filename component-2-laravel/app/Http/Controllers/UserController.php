@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use MongoDB\BSON\Int64;
+use function Laravel\Prompts\password;
 
 class UserController extends Controller
 {
@@ -103,7 +104,28 @@ class UserController extends Controller
         }
     }
 
-    
+
+    public function loginUser(Request $request){
+        $validatedData = $request->validate([
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|max:255'
+        ]);
+
+        $user = User::where('username', $validatedData['username'])->first();
+
+        if (!$user) {
+            return response()->json(["message" => "User Not Found"], 404);
+        }
+
+        // Here, $user->password contains the hashed password from the database
+        if (password_verify($validatedData['password'], $user->password)) {
+            // Password matches
+            return response()->json(['message' => "Login Successful", 'user' => $user], 200);
+        } else {
+            // Password doesn't match
+            return response()->json(["message" => "Incorrect Password"], 401);
+        }
+    }
 
 
 
