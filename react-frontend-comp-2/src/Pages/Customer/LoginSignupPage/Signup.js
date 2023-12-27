@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import flag from "../../Pet_Images/puppies_signup_png.png";
 import logo from "../../Pet_Images/puppies.jpg";
 import { Spinner } from "@chakra-ui/react";
+import signupService from "../../../Services/LoginSignup/signupService";
 
 function Signup(props) {
+  
   const [signupData, setSignupdata] = useState({
     name: "",
     username: "",
@@ -36,31 +38,24 @@ function Signup(props) {
       setErrormessage("Confirm Password does not match with the new password");
     } else {
       const data = {
-        customerName: signupData.name,
+        name: signupData.name,
         username: signupData.username,
-        password: signupData.password,
         email: signupData.email,
-        phone: signupData.phone,
+        role:0,
+        password: signupData.password,
+        password_confirmation: signupData.confirmPassword,
       };
 
-      //   try {
-      //     setSpinner(true);
-      //     const response = await signupService(data);
-      //     console.log("response", response);
-      //     setRedirectToOTP(true);
-      //   } catch (error) {
-      //     console.error(error);
-      //   }
+        try {
+          setSpinner(true);
+          const response = await signupService(data);
+          console.log("response", response);
+         // setRedirectToOTP(true);
+        } catch (error) {
+          console.error(error);
+        }
     }
-    setSignupdata({
-      ...signupData,
-      name: "",
-      username: "",
-      password: "",
-      email: "",
-      phone: "",
-      confirmPassword: "",
-    });
+    
   }
 
   useEffect(() => {

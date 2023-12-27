@@ -7,6 +7,7 @@ import welcome from "../../Pet_Images/puppies.jpg";
 import logimg from "../../Pet_Images/cat1L.jpg"
 
 import { useDispatch } from "react-redux";
+import LoginService from "../../../Services/LoginSignup/LoginService";
 
 // import {
 //   setUserTrue,
@@ -17,6 +18,7 @@ import { useDispatch } from "react-redux";
 // import { toast } from "react-toastify";
 
 function Login(props) {
+  
   // const navigate = useNavigate();
   // const dispatch = useDispatch();
 
@@ -49,10 +51,10 @@ function Login(props) {
       setErrormessage("password cant be empty!");
     } else {
       setErrormessage("");
-      // const loginDataApi = {
-      //   username: loginData.username,
-      //   password: loginData.password,
-      // };
+      const loginDataApi = {
+        username: loginData.username,
+        password: loginData.password,
+      };
       // try {
       //   const response = await loginService(loginDataApi);
       //   console.log(response.user.role);
