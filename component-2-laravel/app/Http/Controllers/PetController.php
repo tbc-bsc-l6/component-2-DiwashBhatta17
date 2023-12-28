@@ -18,7 +18,7 @@ class PetController extends Controller
     {
         $pets = Pet::all();
 
-        // Append image URL to each pet object
+
         $pets->each(function ($pet) {
             $pet->image_url = $this->getImageUrl($pet->image);
         });
@@ -26,11 +26,11 @@ class PetController extends Controller
         return response()->json(['pets' => $pets], 200);
     }
 
-// Helper function to generate image URL
+
     private function getImageUrl($imageName)
     {
 
-        // Replace 'public/images/' with the actual path to your images within the storage directory
+
         return Storage::url('images/' . $imageName);
     }
 
@@ -46,16 +46,16 @@ class PetController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric',
             'seller_id' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the uploaded image
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Process image upload
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('public/images', $imageName); // Store the image in storage/app/public/images directory
+            $image->storeAs('public/images', $imageName);
 
-            $validatedData['image'] = $imageName; // Save image name to the 'image' column
+            $validatedData['image'] = $imageName;
         }
 
         // Create a new pet record
@@ -68,7 +68,18 @@ class PetController extends Controller
     /**
      * Display the specified resource.
      */
+    public function show(string $id)
+    {
+        try {
+            $pet = Pet::findOrFail($id);
 
+
+            return response()->json(['pet' => $pet], 200);
+        } catch (\Exception $e) {
+
+            return response()->json(['message' => 'Pet not found'], 404);
+        }
+    }
 
     /**
      * Update the specified resource in storage.
@@ -80,7 +91,7 @@ class PetController extends Controller
             'name' => 'sometimes|required|string',
             'description' => 'sometimes|required|string',
             'price' => 'sometimes|required|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the uploaded image
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Find the pet by ID
@@ -92,10 +103,10 @@ class PetController extends Controller
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->storeAs('public/images', $imageName);
 
-            $validatedData['image'] = $imageName; // Update the image name if changed
+            $validatedData['image'] = $imageName;
         }
 
-        // Update only the provided fields
+        
         $pet->fill($validatedData)->save();
 
         return response()->json(['message' => 'Pet updated successfully'], 200);
@@ -110,9 +121,9 @@ class PetController extends Controller
     public function destroy(string $id)
     {
         try {
-            $pet = Pet::findOrFail($id); // Find the pet by its ID
+            $pet = Pet::findOrFail($id);
 
-            $pet->delete(); // Delete the pet
+            $pet->delete();
 
             return response()->json(['message' => 'Pet deleted successfully'], 200);
         } catch (\Exception $e) {
