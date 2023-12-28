@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\EmailVerification;
+use App\Mail\PasswordReset;
 use App\Models\User;
 use Carbon\Carbon;
 use http\Env\Response;
@@ -38,7 +39,7 @@ class UserController extends Controller
     {
         $validateData = $request->validate([
             'otp'=> 'required|int|min:4',
-            'id'=>'required|int', // Update the validation rules according to your needs
+            'id'=>'required|int',
         ]);
 
         $otpNumber = $validateData['otp'];
@@ -50,9 +51,8 @@ class UserController extends Controller
             return response()->json(["message"=>"User not found"], 404);
         }
 
-        if ($user->otp === $otpNumber) { // Assuming 'otp' is a column in your user table
-            // Update the user's email verification status
-            $user->email_verified_at = Carbon::now(); // Set email_verified_at to current timestamp
+        if ($user->otp === $otpNumber) {
+            $user->email_verified_at = Carbon::now();
             $user->is_verified = true;
             $user->save();
 
@@ -78,10 +78,10 @@ class UserController extends Controller
         \Log::info('Validated data:', $validatedData);
 
         try {
-            $otp = $this->generateOTP(); // Replace this with your OTP generation logic
-            $name = $validatedData['name']; // Replace with the user's name
-            $email = $validatedData['email']; // Replace with the recipient's email address
-            $this->otpValue = $otp;
+            $otp = $this->generateOTP();
+            $name = $validatedData['name'];
+            $email = $validatedData['email'];
+
 
             Mail::to($email)->send(new EmailVerification($otp, $name));
             \Log::info('Before user creation');
@@ -126,6 +126,49 @@ class UserController extends Controller
             return response()->json(["message" => "Incorrect Password"], 401);
         }
     }
+
+    public function forgetPassword(Request $request){
+        $validateData = $request->validate([
+            'username'=>'required|string|max:255'
+        ]);
+
+        $user = User::where('username',$validateData['username'])->first();
+
+        $otp= $this->generateOTP();
+        $email = $user->email;
+        $name = $user->name;
+
+        if(!$user){
+            \response()->json(["message"=>'user not found'],404);
+        }else{
+            Mail::to($email)->send(new PasswordReset($otp, $name));
+
+            $user->otp = $otp;
+            $user->save();
+            return \response()->json(["message"=>"OTP message is send to mail"],200);
+        }
+    }
+
+
+    public function resetPassword(Request $request)
+    {
+        $validateData = $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+            'username' => 'required|string|max:255'
+        ]);
+
+        $user = User::where('username', $validateData['username'])->first();
+
+        if (!$user) {
+            return response()->json(["message" => "User not found"], 404);
+        } else {
+            $user->password = Hash::make($validateData['password']); 
+            $user->save();
+
+            return response()->json(["message" => "Password changed successfully"], 200);
+        }
+    }
+
 
 
 

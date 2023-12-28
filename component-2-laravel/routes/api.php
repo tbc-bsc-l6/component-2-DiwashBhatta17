@@ -33,6 +33,8 @@ Route::post('/login',[UserController::class,'loginUser']);
 
 //OTP email veification
 Route::post('/otp',[UserController::class,'otpValidation']);
+Route::post('/forgetPassword',[UserController::class,'forgetPassword']);
+Route::post('/resetPassword',[UserController::class,'resetPassword']);
 
 //Routes for the petController
 Route::get('/pets',[PetController::class,'index']);
