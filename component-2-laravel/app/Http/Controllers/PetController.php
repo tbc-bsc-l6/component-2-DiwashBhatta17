@@ -105,8 +105,19 @@ class PetController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    
 
 
+    public function destroy(string $id)
+    {
+        try {
+            $pet = Pet::findOrFail($id); // Find the pet by its ID
+
+            $pet->delete(); // Delete the pet
+
+            return response()->json(['message' => 'Pet deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete pet'], 500);
+        }
+    }
 
 }
