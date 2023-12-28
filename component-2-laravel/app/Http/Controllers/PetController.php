@@ -68,24 +68,45 @@ class PetController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'name' => 'sometimes|required|string',
+            'description' => 'sometimes|required|string',
+            'price' => 'sometimes|required|numeric',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the uploaded image
+        ]);
+
+        // Find the pet by ID
+        $pet = Pet::findOrFail($id);
+
+        // Process image upload if provided
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('public/images', $imageName);
+
+            $validatedData['image'] = $imageName; // Update the image name if changed
+        }
+
+        // Update only the provided fields
+        $pet->fill($validatedData)->save();
+
+        return response()->json(['message' => 'Pet updated successfully'], 200);
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-    }
+    
+
+
+
 }

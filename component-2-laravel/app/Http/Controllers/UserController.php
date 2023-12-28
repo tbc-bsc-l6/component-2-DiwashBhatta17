@@ -162,7 +162,7 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(["message" => "User not found"], 404);
         } else {
-            $user->password = Hash::make($validateData['password']); 
+            $user->password = Hash::make($validateData['password']);
             $user->save();
 
             return response()->json(["message" => "Password changed successfully"], 200);

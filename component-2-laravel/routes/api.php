@@ -39,8 +39,10 @@ Route::post('/resetPassword',[UserController::class,'resetPassword']);
 //Routes for the petController
 Route::get('/pets',[PetController::class,'index']);
 Route::post('/pets/create',[PetController::class,'store']);
+Route::post('/pets/update/{id}',[PetController::class,'update']);
 
 
+//Category Routes
 Route::post('/category/create',[CategoryController::class,'store']);
 Route::get('category',[CategoryController::class,'index']);
 
