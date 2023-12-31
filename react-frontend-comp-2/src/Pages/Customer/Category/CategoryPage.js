@@ -35,12 +35,15 @@ function CategoryPage() {
 
  
   return (
-    <div className='content h-screen dhamilo'>
-  <div className="h-[100vh] flex-col ">
-    <div className="flex justify-between items-center mx-[120px] my-4">
-      <input className='bg-[#fbfafa41] outline-none pl-2 text-white rounded-xl w-[300px] h-[40px] ml-auto' type="text" placeholder="Search..." />
+  <div className=''>
+    <div className="w-full border-1  h-[17vh] dhamilo">
+
+    </div>
+  <div className=" flex-col mt-5 ">
+    <div className="flex mt-5 justify-between gap-5 items-center mx-[120px] my-4">
+      <input className='bg-[#e0913d6d]  outline-none pl-2 text-white rounded-xl w-[300px] h-[40px] ml-auto' type="text" placeholder="Search..." />
       <div className="relative">
-        <select className="bg-[#fbfafa41] outline-none pl-2 text-white rounded-xl w-[150px] h-[40px]" defaultValue="">
+        <select className="bg-[#e0913d] outline-none pl-2 text-white rounded-xl w-[150px] h-[40px]" defaultValue="">
           <option value="" disabled hidden>Categories</option>
           <option value="dog">Dog</option>
           <option value="cat">Cat</option>
@@ -54,13 +57,24 @@ function CategoryPage() {
       </div>
     </div>
   
-    <div className="flex flex-wrap gap-5 mb-5 items-center mx-[120px] justify-around">
+    <div className="flex flex-wrap gap-5 my-5 items-center mx-[120px] justify-start">
       {data.map((value, index) => (
         <div
           key={index}
           className="border-2 h-[392px] backgroundImg1 border-[#f2c308] w-[380px] overflow-hidden"
         >
           <div className="relative h-[280px]">
+          <div className=" flex flex-col absolute  items-end px-3 justify-center h-full w-full">
+                  <div className=" z-10 flex flex-col gap-3 text-2xl items-center">
+                    <i className=" p-1 bg-[#f22a2a] hover:scale-125 hover:bg-[#FF9800] text-white fa-regular fa-eye"></i>
+                    <button >
+                      <i className="p-1 bg-[#f22a2a] hover:scale-125 hover:bg-[#FF9800] text-white fa-solid fa-cart-plus"></i>
+                    </button>
+                    <button >
+                      <i className="p-1 bg-[#f22a2a] hover:scale-125 hover:bg-[#FF9800] text-white fa-regular fa-heart"></i>
+                    </button>
+                  </div>
+                </div>
             <img
               className="h-[395px] -z-10 w-[650px] transition-transform transform scale-100 hover:scale-105"
               src={value.link}
