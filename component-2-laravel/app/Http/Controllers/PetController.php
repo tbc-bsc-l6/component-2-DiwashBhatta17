@@ -106,7 +106,7 @@ class PetController extends Controller
             $validatedData['image'] = $imageName;
         }
 
-        
+
         $pet->fill($validatedData)->save();
 
         return response()->json(['message' => 'Pet updated successfully'], 200);
