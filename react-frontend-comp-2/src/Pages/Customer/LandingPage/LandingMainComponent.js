@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import video from "../../Pet_Images/production_id_4267752 (2160p).mp4";
 import logo2 from "../../Pet_Images/logo2.png";
+import Landing2ndComp from './Landing2ndComp';
+import JoinUs from './JoinUs';
+import Navbar from '../HeaderFooter/Navbar';
+import Footer from '../HeaderFooter/Footer';
 
 function LandingMainComponent() {
+ const joinUsRef = useRef(null);
+
+ const scrollToJoinUs = () => {
+  joinUsRef.current.scrollIntoView({ behavior: "smooth" });
+};
+
   return (
+    <>
+    <Navbar onJoinUsClick={scrollToJoinUs}/>
     <div className=' relative h-screen w-full overflow-hidden'>
       <video autoPlay loop muted className='absolute top-0 left-0 w-full h-full object-cover -z-10 '>
         <source src={video} type='video/mp4' />
@@ -30,6 +42,10 @@ function LandingMainComponent() {
         {/* Other content */}
       </div>
     </div>
+    <Landing2ndComp/>
+    <div ref={joinUsRef}><JoinUs /></div>
+    <Footer/>
+    </>
   );
 }
 

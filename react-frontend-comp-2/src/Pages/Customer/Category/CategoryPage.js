@@ -87,13 +87,13 @@ function CategoryPage() {
                 <div className=" flex flex-col absolute  items-end px-3 justify-center h-full w-full">
                   <div className="z-10 flex flex-col gap-3 text-2xl items-center">
                     <button onClick={()=>setShow(true)}>
-                      <i className=" p-1 bg-[#f22a2a] hover:scale-125 hover:bg-[#FF9800] text-white fa-regular fa-eye"></i>
+                      <i className=" p-1 hover:bg-[#f22a2a] hover:scale-125 bg-[#FF9800] text-white fa-regular fa-eye"></i>
                     </button>
                     <button>
-                      <i className="p-1 bg-[#f22a2a] hover:scale-125 hover:bg-[#FF9800] text-white fa-solid fa-cart-plus"></i>
+                      <i className="p-1 hover:bg-[#f22a2a] hover:scale-125 bg-[#FF9800] text-white fa-solid fa-cart-plus"></i>
                     </button>
                     <button>
-                      <i className="p-1 bg-[#f22a2a] hover:scale-125 hover:bg-[#FF9800] text-white fa-regular fa-heart"></i>
+                      <i className="p-1 hover:bg-[#f22a2a] hover:scale-125 bg-[#FF9800] text-white fa-regular fa-heart"></i>
                     </button>
                   </div>
                 </div>

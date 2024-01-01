@@ -13,9 +13,9 @@ function App() {
   return (
     <>
     {/* <Navbar/> */}
-    {/* <LandingMainComponent/> */}
+    <LandingMainComponent/>
     {/* <Login/> */}
-    <CategoryPage/>
+    {/* <CategoryPage/> */}
     {/* <Landing2ndComp/> */}
     {/* <JoinUs/> */}
     {/* <ProductDescription/> */}
