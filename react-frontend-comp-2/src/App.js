@@ -15,11 +15,11 @@ function App() {
     {/* <Navbar/> */}
     {/* <LandingMainComponent/> */}
     {/* <Login/> */}
-    {/* <CategoryPage/> */}
+    <CategoryPage/>
     {/* <Landing2ndComp/> */}
     {/* <JoinUs/> */}
     {/* <ProductDescription/> */}
-    <ProductDescription/>
+    {/* <ProductDescription/> */}
     {/* <Footer/> */}
 
     {/* <Signup/> */}
