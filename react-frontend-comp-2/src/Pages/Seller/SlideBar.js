@@ -1,7 +1,17 @@
 import React from 'react'
 import { BarChart, Wallet, Newspaper, BellRing, Paperclip, Brush, Wrench } from 'lucide-react'
+import { Flip, ToastContainer, toast } from "react-toastify";
 
 export function SlideBar() {
+
+  function handletoast() {
+    toast.success("Logged out", {
+      position: "top-center",
+      transition: Flip,
+      autoClose: 2000,
+    });
+  }
+
   return (
     <aside className="flex h-screen w-64 flex-col overflow-y-auto border-r bg-black px-5 py-8">
       <a href="#">
@@ -75,6 +85,7 @@ export function SlideBar() {
           </div>
         </nav>
       </div>
+      <ToastContainer/>
     </aside>
   )
 }

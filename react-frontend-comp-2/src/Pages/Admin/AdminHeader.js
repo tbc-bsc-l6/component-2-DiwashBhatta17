@@ -1,10 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { BarChart, Wallet, Newspaper, BellRing, Paperclip, Brush, Wrench } from 'lucide-react'
 import { Flip, ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import logo from "../Pet_Images/logo1.png";
+import { Link } from 'react-router-dom';
 
-export default function Admin1stpage() {
+ function AdminHeader() {
+
   function handletoast() {
     toast.success("Logged out", {
       position: "top-center",
@@ -12,62 +12,71 @@ export default function Admin1stpage() {
       autoClose: 2000,
     });
   }
+
   return (
-    <>
-      <div className="bg-[#ffffff] fixed shadow-xl h-screen">
-        <div className="flex w-screen fixed justify-between shadow-xl h-[90px] itmes-center bg-[#ffffff] py-4 px-5">
-          <div className="flex gap-2 ">
-            <Link to="/admin">
-              <img
-                src={logo}
-                alt="logo"
-                className=" h-[80px] mt-[-20px] hover:cursor-pointer"
-              />
+    <aside className="flex h-screen w-64 flex-col overflow-y-auto border-r bg-black px-5 py-8">
+      <a href="#">
+        <h1 className='text-3xl font-bold text-white'>ADMIN</h1>
+      </a>
+      <div className="mt-6 flex flex-1 flex-col justify-between">
+        <nav className="-mx-3 space-y-6 ">
+          <div className="space-y-3 ">
+            <label className="px-3 text-xs font-semibold uppercase text-white">analytics</label>
+            <Link
+              className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-50 hover:text-gray-700"
+              to='/admin'
+            >
+              <BarChart className="h-5 w-5" aria-hidden="true" />
+              <span className="mx-2 text-sm font-medium">Dashboard</span>
             </Link>
-            <i className="fa-solid text-2xl mt-[2px] ml-[300px] text-black fa-user-lock"></i>
-            <h1 className="text-2xl font-bold text-black">Admin</h1>
+            <a
+              className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
+              href="#"
+            >
+              <Wallet className="h-5 w-5" aria-hidden="true" />
+              <span className="mx-2 text-sm font-medium">Sales</span>
+            </a>
           </div>
-          <Link
-            to="/"
-            className=" px-4 py-2 rounded-full border-2 border-[red] hover:bg-[red] hover:text-white"
-            onClick={handletoast}
-          >
-            Logout
-          </Link>
-        </div>
-        <div className="w-[30vh] top-[11vh] fixed flex flex-col items-start p-5 gap-4 h-[70vh] mt-4 bg-white shadow-xl">
-          <div className="flex gap-3">
-            <i className="fa-light text-xl fa-table-columns"></i>
-            <Link to="/admin" className="mt-[3px] ">
-              Dashboard
+          <div className="space-y-3 ">
+            <label className="px-3 text-xs font-semibold uppercase text-white">content</label>
+            <Link
+              className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
+              to='/adminSeller'
+            >
+              <Newspaper className="h-5 w-5" aria-hidden="true" />
+              <span className="mx-2 text-sm font-medium">Sellers</span>
             </Link>
-          </div>
-
-          <div className="flex gap-2">
-            <i className="fa-solid mt-1 fa-users"></i>
-            <Link to="/adminRestaurant" href="#">
-              Sellers
-            </Link>
-          </div>
-
-          <div className="flex gap-[10px]">
-            <i className="fa-regular mt-1 fa-hourglass"></i>
-            <Link to="/adminRider" className="ml-2">
-              All pets
+           
+            <Link
+              className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
+              to='/adminPets'
+            >
+              <Paperclip className="h-5 w-5" aria-hidden="true" />
+              <span className="mx-2 text-sm font-medium">Pets</span>
             </Link>
           </div>
 
-          <div className="flex gap-3">
-            <i className="fa-regular mt-1 fa-chart-bar"></i>
-            <Link to="/adminreviews">Reviews</Link>
+          <div className="space-y-3 ">
+            <label className="px-3 text-xs font-semibold uppercase text-white">Customization</label>
+            <a
+              className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
+              href="#"
+            >
+              <Brush className="h-5 w-5" aria-hidden="true" />
+              <span className="mx-2 text-sm font-medium">Seller Request</span>
+            </a>
+            <a
+              className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
+              href="#"
+            >
+              <Wrench className="h-5 w-5" aria-hidden="true" />
+              <span className="mx-2 text-sm font-medium">Logout</span>
+            </a>
           </div>
-        </div>
-        <div className="bg-white fixed top-[84vh] left-0 mt-3 w-[30vh] h-[10vh] flex flex-col shadow-xl items-center gap-1">
-          <h1 className="mt-2">Awesome Petstore</h1>
-          <p>version: 1.0.0.10</p>
-        </div>
+        </nav>
       </div>
-      <ToastContainer />
-    </>
-  );
+      <ToastContainer/>
+    </aside>
+  )
 }
+export default AdminHeader;

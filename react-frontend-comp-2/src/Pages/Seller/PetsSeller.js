@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import getAllpets from "../../Services/Admin/getAllpets";
 import { SlideBar } from "./SlideBar";
 
-function PetsSeller() {
+function AdminPets() {
+
+  const [pets, setPets] = useState([""]);
+
+  useEffect(()=>{
+    
+    fetchdata();
+  
+  },[]);
+  async function fetchdata(){
+    try {
+      const response =await getAllpets();
+      console.log(response);
+      setPets(response.pets)
+
+      
+    } catch (error) {
+      console.error(error);  
+    }
+  }
+
   const people = [
     {
       name: "John Doe",
@@ -30,19 +51,14 @@ function PetsSeller() {
         <section className="mx-auto w-full max-w-7xl px-4 py-4">
           <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
             <div>
-              <h2 className="text-lg font-semibold">Employees</h2>
+              <h2 className="text-lg font-semibold">All Pets in sell</h2>
               <p className="mt-1 text-sm text-gray-700">
-                This is a list of all employees. You can add new employees, edit
+                This is a list of all pets. You can, edit
                 or delete existing ones.
               </p>
             </div>
             <div>
-              <button
-                type="button"
-                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-              >
-                Add new employee
-              </button>
+             
             </div>
           </div>
           <div className="mt-6 flex flex-col">
@@ -56,27 +72,27 @@ function PetsSeller() {
                           scope="col"
                           className="px-4 py-3.5 text-left text-sm font-normal text-gray-700"
                         >
-                          <span>Employee</span>
+                          <span>Name</span>
                         </th>
                         <th
                           scope="col"
                           className="px-12 py-3.5 text-left text-sm font-normal text-gray-700"
                         >
-                          Title
+                          Description
                         </th>
 
                         <th
                           scope="col"
                           className="px-4 py-3.5 text-left text-sm font-normal text-gray-700"
                         >
-                          Status
+                          Categorie
                         </th>
 
                         <th
                           scope="col"
                           className="px-4 py-3.5 text-left text-sm font-normal text-gray-700"
                         >
-                          Role
+                          Price
                         </th>
                         <th scope="col" className="relative px-4 py-3.5">
                           <span className="sr-only">Edit</span>
@@ -84,33 +100,33 @@ function PetsSeller() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
-                      {people.map((person) => (
-                        <tr key={person.name}>
+                      {pets.map((pet) => (
+                        <tr key={pet.id}>
                           <td className="whitespace-nowrap px-4 py-4">
                             <div className="flex items-center">
                               <div className="h-10 w-10 flex-shrink-0">
                                 <img
                                   className="h-10 w-10 rounded-full object-cover"
-                                  src={person.image}
+                                  src={pet.image_url}
                                   alt=""
                                 />
                               </div>
                               <div className="ml-4">
                                 <div className="text-sm font-medium text-gray-900">
-                                  {person.name}
+                                  {pet.name}
                                 </div>
                                 <div className="text-sm text-gray-700">
-                                  {person.email}
+                                  {pet.email}
                                 </div>
                               </div>
                             </div>
                           </td>
                           <td className="whitespace-nowrap px-12 py-4">
                             <div className="text-sm text-gray-900 ">
-                              {person.title}
+                              {pet.description}
                             </div>
                             <div className="text-sm text-gray-700">
-                              {person.department}
+                              {pet.id}
                             </div>
                           </td>
                           <td className="whitespace-nowrap px-4 py-4">
@@ -119,7 +135,7 @@ function PetsSeller() {
                             </span>
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-700">
-                            {person.role}
+                            {pet.price}
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-right text-sm font-medium">
                             <a href="#" className="text-gray-700">
@@ -140,4 +156,4 @@ function PetsSeller() {
   );
 }
 
-export default PetsSeller;
+export default AdminPets;

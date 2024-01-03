@@ -10,10 +10,11 @@ import { Provider } from "react-redux";
 import store from "./Services/Redux-Service/store";
 
 import AdminDashboard from "./Pages/Admin/AdminDashboard";
-import AdminRestaurant from "./Pages/Admin/AdminSellers";
 import Adminrider from "./Pages/Admin/AdminPets";
 import Adminreview from "./Pages/Admin/Adminreview";
 import AdminHeader from "./Pages/Admin/AdminHeader";
+import AdminSeller from "./Pages/Admin/AdminSellers";
+import AdminPets from "./Pages/Admin/AdminPets";
 
 const routeConfig = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const routeConfig = createBrowserRouter([
   },
 
   {
-    path: "/admin",
+    path: "/admin2",
     element: <AdminHeader />,
   },
   {
@@ -34,12 +35,12 @@ const routeConfig = createBrowserRouter([
     element: <AdminDashboard />,
   },
   {
-    path: "/adminRestaurant",
-    element: <AdminRestaurant />,
+    path: "/adminSeller",
+    element: <AdminSeller/>,
   },
   {
-    path: "/adminRider",
-    element: <Adminrider />,
+    path: "/adminPets",
+    element: <AdminPets/>,
   },
   {
     path: "/adminreviews",
