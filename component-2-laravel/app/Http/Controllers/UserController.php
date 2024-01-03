@@ -20,6 +20,13 @@ class UserController extends Controller
         return response()->json(['users'=>$user],200);
     }
 
+
+    public function getAllSeller() {
+        $users = User::where('role', 1)->get();
+        return response()->json(['sellers' => $users]);
+    }
+
+
     public function findUserById($id): \Illuminate\Http\JsonResponse
     {
         $user = User::find($id);
@@ -103,6 +110,37 @@ class UserController extends Controller
             return response()->json(['error' => 'Failed to create user or send email'], 500);
         }
     }
+
+    public function sellerStore(Request $request)
+    {
+        // Log request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'role' => 'integer|max:255',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+        try {
+            $user = User::create([
+                'name' => $validatedData['name'],
+                'username' => $validatedData['username'],
+                'role' => $validatedData['role'],
+                'email' => $validatedData['email'],
+                'otp' => 5555,
+                'password' => Hash::make($validatedData['password']),
+            ]);
+
+            // Email sent successfully
+            return response()->json(['message' => 'Email sent successfully'], 200);
+        } catch (\Exception $e) {
+            // Log exception
+            \Log::error('Error creating user: ' . $e->getMessage());
+            // Email sending failed
+            return response()->json(['error' => 'Failed to create user or send email'], 500);
+        }
+    }
+
 
 
     public function loginUser(Request $request){

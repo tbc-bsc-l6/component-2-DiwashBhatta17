@@ -26,6 +26,11 @@ class PetController extends Controller
         return response()->json(['pets' => $pets], 200);
     }
 
+    public function getPetbyseller($id){
+        $pets = Pet::where('seller_id',$id)->get();
+        return response()->json(['pets'=>$pets]);
+    }
+
 
     private function getImageUrl($imageName)
     {

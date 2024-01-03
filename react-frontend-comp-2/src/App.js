@@ -7,13 +7,19 @@ import Landing2ndComp from "./Pages/Customer/LandingPage/Landing2ndComp";
 import LandingMainComponent from "./Pages/Customer/LandingPage/LandingMainComponent";
 import Login from "./Pages/Customer/LoginSignupPage/Login";
 import Signup from "./Pages/Customer/LoginSignupPage/Signup";
+import Dashboard from "./Pages/Seller/Dashboard";
+import PetsSeller from "./Pages/Seller/PetsSeller";
+import { SlideBar } from "./Pages/Seller/SlideBar";
 
 
 function App() {
   return (
     <>
     {/* <Navbar/> */}
-    <LandingMainComponent/>
+    {/* <LandingMainComponent/> */}
+    {/* <SlideBar/> */}
+    {/* <Dashboard/> */}
+    <PetsSeller/>
     {/* <Login/> */}
     {/* <CategoryPage/> */}
     {/* <Landing2ndComp/> */}

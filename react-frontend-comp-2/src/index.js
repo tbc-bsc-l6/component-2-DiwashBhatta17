@@ -17,7 +17,7 @@ import AdminHeader from "./Pages/Admin/AdminHeader";
 
 const routeConfig = createBrowserRouter([
   {
-    path: "/a",
+    path: "/",
     element: <LandingMainComponent />,
   },
   {
@@ -26,7 +26,7 @@ const routeConfig = createBrowserRouter([
   },
 
   {
-    path: "/",
+    path: "/admin",
     element: <AdminHeader />,
   },
   {

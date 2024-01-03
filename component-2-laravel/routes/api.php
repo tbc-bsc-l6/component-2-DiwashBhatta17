@@ -25,10 +25,12 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/',[UserController::class,'index']);
+Route::get('/seller',[UserController::class,'getAllSeller']);
 Route::get('/users/{id}',[UserController::class, 'findUserById']);
 
 //To register the user
 Route::post('/create',[UserController::class,'store']);
+Route::post('/createSeller',[UserController::class,'sellerStore']);
 Route::post('/login',[UserController::class,'loginUser']);
 
 //OTP email veification
@@ -42,6 +44,7 @@ Route::post('/pets/create',[PetController::class,'store']);
 Route::post('/pets/update/{id}',[PetController::class,'update']);
 Route::get('/pets/get/{id}',[PetController::class,'show']);
 Route::get('/pets/delete/{id}',[PetController::class,'destroy']);
+Route::get('/pets/seller/{id}',[PetController::class,'getPetbyseller']);
 
 //Category Routes
 Route::post('/category/create',[CategoryController::class,'store']);
