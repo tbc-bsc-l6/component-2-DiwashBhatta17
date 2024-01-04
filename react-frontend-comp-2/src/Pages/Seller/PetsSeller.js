@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import { SlideBar } from "./SlideBar";
 import getPetbyId from "../../Services/Seller/getPetbyId";
 import imgURL from "../../Services/Apis/imageurl";
+import AddPetForm from "./AddPetForm";
 
 function PetsSeller() {
+  const [add, setAdd] = useState(false);
+  const [edit, setEdit] = useState(false);
+
   const [pets, setPets] = useState([""]);
   const userId = localStorage.getItem("sellerId");
 
@@ -38,6 +42,7 @@ function PetsSeller() {
             <div>
               <button
                 type="button"
+                onClick={() => setAdd(true)}
                 className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
               >
                 Add new Pet
@@ -135,6 +140,7 @@ function PetsSeller() {
           </div>
         </section>
       </div>
+      <AddPetForm add={add} setAdd={setAdd}/>
     </div>
   );
 }

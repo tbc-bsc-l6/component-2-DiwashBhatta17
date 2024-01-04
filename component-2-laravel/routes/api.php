@@ -45,6 +45,7 @@ Route::post('/pets/update/{id}',[PetController::class,'update']);
 Route::get('/pets/get/{id}',[PetController::class,'show']);
 Route::get('/pets/delete/{id}',[PetController::class,'destroy']);
 Route::get('/pets/seller/{id}',[PetController::class,'getPetbyseller']);
+Route::get('/pets/visible',[PetController::class,'getVisiblePet']);
 
 //Category Routes
 Route::post('/category/create',[CategoryController::class,'store']);

@@ -17,13 +17,21 @@ class PetController extends Controller
     public function index()
     {
         $pets = Pet::all();
-
-
         $pets->each(function ($pet) {
             $pet->image_url = $this->getImageUrl($pet->image);
         });
 
         return response()->json(['pets' => $pets], 200);
+    }
+
+    public function getVisiblePet(){
+        $pets = Pet::where('isVisible',true)->get();
+        $pets->each(function ($pet) {
+            $pet->image_url = $this->getImageUrl($pet->image);
+        });
+        return response()->json(['pets' => $pets], 200);
+
+
     }
 
     public function getPetbyseller($id){
