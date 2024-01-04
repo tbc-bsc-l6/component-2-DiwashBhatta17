@@ -9,18 +9,14 @@ import logimg from "../../Pet_Images/cat1L.jpg"
 import { useDispatch } from "react-redux";
 import LoginService from "../../../Services/LoginSignup/LoginService";
 
-// import {
-//   setUserTrue,
-//   setAdminTrue,
-//   setRestaurantTrue,
-//   setLogin,
-// } from "../../Services/Redux-Service/counterSlice";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
+import { setLogin, setSignup,setAdminTrue,setUserFalse,setSellerTrue } from "../../../Services/Redux-Service/counterSlice";
 
 function Login(props) {
   
-  // const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const [loginData, setLoginData] = useState({
     username: "",
@@ -55,31 +51,36 @@ function Login(props) {
         username: loginData.username,
         password: loginData.password,
       };
-      // try {
-      //   const response = await loginService(loginDataApi);
-      //   console.log(response.user.role);
+      try {
+        const response = await LoginService(loginDataApi);
+        console.log(response.user);
 
-      //   if (response.user.role === "ROLE_RESTAURANT") {
-      //     dispatch(setRestaurantTrue());
-      //     localStorage.setItem("restaurantId", response.user.restaurantId);
-      //     dispatch(()=>setLogin(false));
-      //     navigate("/resturantDashboard");
+        if (response.user.role === 0) {
+          localStorage.setItem("userId", response.user.id);
+          dispatch(()=>setLogin(false));
+          navigate("/");
 
-      //   } else if (response.user.role === "ROLE_CUSTOMER") {
-      //     dispatch(setUserTrue());
-      //     localStorage.setItem("customerId", response.user.customerId);
-      //     navigate("/");
+        } else if (response.user.role === 1) {
+          dispatch(setSellerTrue());
+          dispatch(setUserFalse());
+          localStorage.setItem("sellerId", response.user.id);
+          navigate("/sellerDashboard");
 
-      //   } else if (response.user.role === "ROLE_RIDER") {
-      //     localStorage.setItem("riderId", response.user.id);
-      //     dispatch(setLogin(false));
-      //     navigate("/riderDashboard");
+        } else if (response.user.role === 2) {
+          dispatch(setLogin(false));
+          dispatch(setAdminTrue());
+          dispatch(setUserFalse());
+          localStorage.setItem("adminID", response.user.id);
+          navigate("/admin");
 
-      //   }
-        //localStorage.setItem("JWTtoken", response.accessToken);
-      // } catch (error) {
-      //   console.error(error);
-      // }
+        }
+        // localStorage.setItem("JWTtoken", response.accessToken);
+      } catch (error) {
+        console.error("i dont know",error);
+        setErrormessage(error.response.data.message);
+
+
+      }
     }
 
     loggedin();

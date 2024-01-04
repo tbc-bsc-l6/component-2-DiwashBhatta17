@@ -1,15 +1,24 @@
 import React from 'react'
 import { BarChart, Wallet, Newspaper, BellRing, Paperclip, Brush, Wrench } from 'lucide-react'
 import { Flip, ToastContainer, toast } from "react-toastify";
+import { Link, useNavigate } from 'react-router-dom';
 
 export function SlideBar() {
+  const navigate = useNavigate();
+
+  const userId = localStorage.getItem('sellerId');
+  if(!userId){
+    navigate('/');
+  }
 
   function handletoast() {
     toast.success("Logged out", {
       position: "top-center",
       transition: Flip,
-      autoClose: 2000,
+      autoClose: 2000,  
     });
+    localStorage.removeItem('sellerId');
+    navigate('/');
   }
 
   return (
@@ -32,13 +41,13 @@ export function SlideBar() {
         <nav className="-mx-3 space-y-6 ">
           <div className="space-y-3 ">
             <label className="px-3 text-xs font-semibold uppercase text-white">analytics</label>
-            <a
+            <Link
               className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-50 hover:text-gray-700"
-              href="#"
+              to='/sellerDashboard'
             >
               <BarChart className="h-5 w-5" aria-hidden="true" />
               <span className="mx-2 text-sm font-medium">Dashboard</span>
-            </a>
+            </Link>
             <a
               className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
               href="#"
@@ -57,13 +66,13 @@ export function SlideBar() {
               <span className="mx-2 text-sm font-medium">Orders</span>
             </a>
            
-            <a
+            <Link
               className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
-              href="#"
+              to='/petsSell'
             >
               <Paperclip className="h-5 w-5" aria-hidden="true" />
               <span className="mx-2 text-sm font-medium">Pets</span>
-            </a>
+            </Link>
           </div>
 
           <div className="space-y-3 ">
@@ -77,7 +86,7 @@ export function SlideBar() {
             </a>
             <a
               className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
-              href="#"
+              onClick={handletoast}
             >
               <Wrench className="h-5 w-5" aria-hidden="true" />
               <span className="mx-2 text-sm font-medium">Logout</span>

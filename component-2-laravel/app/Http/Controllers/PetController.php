@@ -28,12 +28,15 @@ class PetController extends Controller
 
     public function getPetbyseller($id){
         $pets = Pet::where('seller_id',$id)->get();
+        $pets->each(function ($pet) {
+            $pet->image_url = $this->getImageUrl($pet->image);
+        });
         return response()->json(['pets'=>$pets]);
     }
 
 
 
-    
+
     private function getImageUrl($imageName)
     {
 

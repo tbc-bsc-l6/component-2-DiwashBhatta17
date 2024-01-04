@@ -15,6 +15,8 @@ import Adminreview from "./Pages/Admin/Adminreview";
 import AdminHeader from "./Pages/Admin/AdminHeader";
 import AdminSeller from "./Pages/Admin/AdminSellers";
 import AdminPets from "./Pages/Admin/AdminPets";
+import PetsSeller from "./Pages/Seller/PetsSeller";
+import Dashboard from "./Pages/Seller/Dashboard";
 
 const routeConfig = createBrowserRouter([
   {
@@ -46,6 +48,17 @@ const routeConfig = createBrowserRouter([
     path: "/adminreviews",
     element: <Adminreview />,
   },
+  {
+    path: "/petsSell",
+    element: <PetsSeller/>,
+  },
+  {
+    path: "/sellerDashboard",
+    element: <Dashboard/>,
+  },
+
+  //For seller Account 
+
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

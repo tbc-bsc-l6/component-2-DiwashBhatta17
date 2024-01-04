@@ -1,5 +1,5 @@
 import axios from "axios"
-import baseURL from "../api"
+import baseURL from "../Apis/api";
 
 async function getAllpets() {
     try {
