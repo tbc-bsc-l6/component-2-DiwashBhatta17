@@ -89,9 +89,10 @@ class UserController extends Controller
             $name = $validatedData['name'];
             $email = $validatedData['email'];
 
-
             Mail::to($email)->send(new EmailVerification($otp, $name));
             \Log::info('Before user creation');
+
+            // Create user
             $user = User::create([
                 'name' => $validatedData['name'],
                 'username' => $validatedData['username'],
@@ -101,8 +102,11 @@ class UserController extends Controller
                 'password' => Hash::make($validatedData['password']),
             ]);
 
-            // Email sent successfully
-            return response()->json(['message' => 'Email sent successfully'], 200);
+            // Get the user ID
+            $userID = $user->id;
+
+            // Email sent successfully along with the user ID
+            return response()->json(['message' => 'Email sent successfully', 'userID' => $userID], 200);
         } catch (\Exception $e) {
             // Log exception
             \Log::error('Error creating user: ' . $e->getMessage());
@@ -110,6 +114,7 @@ class UserController extends Controller
             return response()->json(['error' => 'Failed to create user or send email'], 500);
         }
     }
+
 
     public function sellerStore(Request $request)
     {
@@ -202,7 +207,6 @@ class UserController extends Controller
         } else {
             $user->password = Hash::make($validateData['password']);
             $user->save();
-
             return response()->json(["message" => "Password changed successfully"], 200);
         }
     }

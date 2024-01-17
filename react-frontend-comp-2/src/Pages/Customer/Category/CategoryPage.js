@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import img1 from "../../Pet_Images/pitbull.jpg";
 import img2 from "../../Pet_Images/cat.jpg";
 import img3 from "../../Pet_Images/pupp2.jpg";
@@ -6,32 +6,30 @@ import img4 from "../../Pet_Images/bird.jpg";
 import { ProductDescription } from "./ProductDescription";
 import Navbar from "../HeaderFooter/Navbar";
 import Footer from "../HeaderFooter/Footer";
+import getVisiblepets from "../../../Services/Users/getVisiblepets";
+import imgURL from "../../../Services/Apis/imageurl";
 
 function CategoryPage() {
-  const [data, setData] = useState([
-    {
-      link: img1,
-      name: "Chaku",
-      text: "Manghe Sangaranthi",
-    },
-    {
-      link: img2,
-      name: "Qwati",
-      text: "Qwati Purney",
-    },
-    {
-      link: img3,
-      name: "Samayabaji",
-      text: "Indra Jatra",
-    },
-    {
-      link: img4,
-      name: "Yomari",
-      text: "Yomari Purney",
-    },
-  ]);
-
+  const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
+  const [id, setId] = useState();
+
+  async function fetchData(){
+    const response = await getVisiblepets();
+    console.log("response", response);
+    setData(response.pets);
+  }
+  
+  useEffect(()=>{
+    fetchData();
+  },[]);
+
+
+  function viewPopup(id){
+    setId(id);
+    setShow(true)
+
+  }
 
   // Number of items to display per page
 
@@ -75,7 +73,7 @@ function CategoryPage() {
             </span>
           </div>
         </div>
-        <ProductDescription show={show} setShow={setShow} />
+        <ProductDescription id={id} show={show} setShow={setShow} />
 
         <div className="flex flex-wrap gap-5 my-5 items-center mx-[120px] justify-start">
           {data.map((value, index) => (
@@ -86,7 +84,7 @@ function CategoryPage() {
               <div className="relative h-[280px]">
                 <div className=" flex flex-col absolute  items-end px-3 justify-center h-full w-full">
                   <div className="z-10 flex flex-col gap-3 text-2xl items-center">
-                    <button onClick={()=>setShow(true)}>
+                  <button onClick={() => viewPopup(value.id)}>
                       <i className=" p-1 hover:bg-[#f22a2a] hover:scale-125 bg-[#FF9800] text-white fa-regular fa-eye"></i>
                     </button>
                     <button>
@@ -99,16 +97,15 @@ function CategoryPage() {
                 </div>
                 <img
                   className="h-[395px] w-[650px] transition-transform transform scale-100 hover:scale-105"
-                  src={value.link}
+                  src={imgURL+value.image_url}
                   alt="img"
-                  onClick={()=>setShow(true)}
-                />
+                         />
                 {/* {popup && <Itempopup onClose={closePopup} />} */}
               </div>
               <div className="flex relative flex-col dhamilo justify-center items-center text-white h-[110px]">
                 <h1>{value.name}</h1>
                 <div className="mx-4">{/* <img src={line} alt="" /> */}</div>
-                <p>{value.text}</p>
+                <p>RS {value.price}</p>
               </div>
             </div>
           ))}

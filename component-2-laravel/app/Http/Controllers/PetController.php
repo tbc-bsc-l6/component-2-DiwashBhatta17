@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Models\Pet;
 use Illuminate\Support\Facades\Storage;
@@ -47,8 +48,6 @@ class PetController extends Controller
 
     private function getImageUrl($imageName)
     {
-
-
         return Storage::url('images/' . $imageName);
     }
 
@@ -90,11 +89,10 @@ class PetController extends Controller
     {
         try {
             $pet = Pet::findOrFail($id);
-
+            $pet->image_url = $this->getImageUrl($pet->image);
 
             return response()->json(['pet' => $pet], 200);
-        } catch (\Exception $e) {
-
+        } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'Pet not found'], 404);
         }
     }

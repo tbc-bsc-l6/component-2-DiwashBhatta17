@@ -17,6 +17,7 @@ import AdminSeller from "./Pages/Admin/AdminSellers";
 import AdminPets from "./Pages/Admin/AdminPets";
 import PetsSeller from "./Pages/Seller/PetsSeller";
 import Dashboard from "./Pages/Seller/Dashboard";
+import Otp from "./Pages/Customer/LoginSignupPage/Otp";
 
 const routeConfig = createBrowserRouter([
   {
@@ -55,6 +56,11 @@ const routeConfig = createBrowserRouter([
   {
     path: "/sellerDashboard",
     element: <Dashboard/>,
+  },
+
+  {
+    path: "/otp/:id",
+    element: <Otp/>,
   },
 
   //For seller Account 

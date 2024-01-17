@@ -4,8 +4,15 @@ import flag from "../../Pet_Images/puppies_signup_png.png";
 import logo from "../../Pet_Images/puppies.jpg";
 import { Spinner } from "@chakra-ui/react";
 import signupService from "../../../Services/LoginSignup/signupService";
+import { useDispatch, useSelector } from "react-redux";
+import { setSignup } from "../../../Services/Redux-Service/counterSlice";
+import { useNavigate } from "react-router-dom";
 
 function Signup(props) {
+  const signins = useSelector((state) => state.counter.signupPopup)  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
   
   const [signupData, setSignupdata] = useState({
     name: "",
@@ -51,6 +58,8 @@ function Signup(props) {
           const response = await signupService(data);
           console.log("response", response);
          // setRedirectToOTP(true);
+         const someId = response.userID
+         navigate(`/otp/${someId}`);
         } catch (error) {
           console.error(error);
         }
@@ -79,7 +88,7 @@ function Signup(props) {
   //     dispatch(setlogin(true));
   //     dispatch(setSignup(false));
   //   }
-  return props.signup ? (
+  return signins ? (
     <div className="flex z-40 top-0 left-0 w-full justify-center fixed items-center h-screen dhamilo">
       <div className=" bg-white h-[480px] w-[680px] flex flex-col ">
         <div className=" h-[100px] flex justify-center border-[#a03636]">
@@ -90,7 +99,7 @@ function Signup(props) {
           />
         </div>
        <div className=" flex mr-10 justify-end ">
-          <button onClick={() => props.setSignup(false)}>
+          <button onClick={() => dispatch(setSignup(false))}>
           <i className="absolute text-right top-[230px]  text-2xl focus:text-yellow-50 text-black   fa-solid fa-xmark"></i>
           </button>
         </div>

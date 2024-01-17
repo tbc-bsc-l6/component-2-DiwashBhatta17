@@ -1,38 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Star, ChevronDown } from "lucide-react";
+import getPetbyId from "../../../Services/Users/getPetbyId";
+import imgURL from "../../../Services/Apis/imageurl";
+import OrderPopup from "./OrderPopup";
 
 export const ProductDescription = (props) => {
-  const [data, setData] = useState(
-    {
-      categoryName: "Nike",
-      productName: "Air Jordan 1 Retro High OG",
-      price: "200.99",
-      rating: 4.5,
-      description:
-        " Labore aut, delectus expedita a quos, porro voluptatibus doloribus ullam perspiciatis ea molestias suscipit odit inventore natus deleniti reprehenderit quo nisi excepturi!",
+
+    const [data, setData] = useState({});
+    const [isOpen, setisOpen] = useState(false);
+
+    
+    async function fetchData() {
+      try {
+        const response = await getPetbyId(props.id); 
+        setData(response.pet);        
+      } catch (error) {
+        
+      }
     }
-    // Add more objects if needed...
-  );
+    
+  
+    useEffect(() => {
+      fetchData();
+    },[props.id]); 
 
   return (props.show)?
-    <section className="dhamilo flex z-40 fixed justify-center top-0 left-0 items-center h-screen w-full overflow-hidden">
+  <>
+    <section className="dhamilo flex z-20 fixed justify-center top-0 left-0 items-center h-screen w-full overflow-hidden">
       <div className=" bg-white w-[860px] flex items-center justify-center max-w-5xl">
         <div className="flex h-full items-center justify-center lg:w-4/">
           <img
             alt="Nike Air Max 21A"
             className="h-[300px] w-full rounded object-cove lg:h-[450px] lg:w-[60%]"
-            src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8c2hvZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
-          />
+          src={imgURL+data.image_url}          />
           <div className="mt-6 mr-3 w-full lg:mt-0 lg:w-1/2 lg:pl-10 ">
             <h2 className="text-sm font-semibold tracking-widest text-gray-500">
-              {data.categoryName}
+              {data.name}
             </h2>
             <div className="w-full text-right text-2xl">
               {" "}
               <button onClick={()=>props.setShow(false)} className="fa text-right flex items-center fa-xmark"></button>
             </div>
             <h1 className="my-4 text-3xl font-semibold text-black">
-              {data.productName}
+              {data.name}
             </h1>
             <div className="my-4 flex items-center">
               <span className="flex items-center space-x-1">
@@ -40,7 +50,7 @@ export const ProductDescription = (props) => {
                   <Star key={i} size={16} className="text-yellow-500" />
                 ))}
                 <span className="ml-3 inline-block text-xs font-semibold">
-                  {data.rating} Reviews
+                 Reviews
                 </span>
               </span>
             </div>
@@ -61,6 +71,9 @@ export const ProductDescription = (props) => {
               <button
                 type="button"
                 className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                onClick={() => {
+                  setisOpen(true);
+                }}
               >
                 Buy Now
               </button>
@@ -68,6 +81,11 @@ export const ProductDescription = (props) => {
           </div>
         </div>
       </div>
+      
+
     </section>
+          <OrderPopup isOpen={isOpen} setisOpen={setisOpen} />
+          </>
+
    : "";
 };

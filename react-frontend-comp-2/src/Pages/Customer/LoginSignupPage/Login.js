@@ -6,17 +6,16 @@ import "react-toastify/dist/ReactToastify.css";
 import welcome from "../../Pet_Images/puppies.jpg";
 import logimg from "../../Pet_Images/cat1L.jpg"
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LoginService from "../../../Services/LoginSignup/LoginService";
 
 import { toast } from "react-toastify";
 import { setLogin, setSignup,setAdminTrue,setUserFalse,setSellerTrue } from "../../../Services/Redux-Service/counterSlice";
 
 function Login(props) {
-  
+  const loginis = useSelector((state) => state.counter.loginPopup)  
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
 
   const [loginData, setLoginData] = useState({
     username: "",
@@ -25,7 +24,6 @@ function Login(props) {
   });
   console.log(loginData);
 
-  const [login , setlogin]= useState(true);
 
   const [errorMessage, setErrormessage] = useState("");
   //logged in toast
@@ -36,8 +34,8 @@ function Login(props) {
 
     // console.log("Login vaiyoooooo");
 
-    // toast.success("Succesfully logged In.");
-    // window.location.reload();
+     toast.success("Succesfully logged In.");
+     window.location.reload();
   };
 
   async function handelClick() {
@@ -86,7 +84,7 @@ function Login(props) {
     loggedin();
   }
 
-  return props.login ? (
+  return loginis ? (
     <>
       <div className="flex z-40 top-0 left-0 w-full justify-center fixed items-center h-screen dhamilo">
         <div className=" bg-[#fff] w-[770px] w-[750px] h-[500px] flex ">
@@ -103,7 +101,7 @@ function Login(props) {
           {/* ist one */}
           <div className="justify-center flex-col w-[60%] p-5 flex">
             <div className="mb-4 flex justify-end pt-4">
-              <button onClick={() => props.setLogin(false)}>
+              <button onClick={() => dispatch(setLogin(false))}>
                 <i className="absolute text-right top-[150px]  text-2xl focus:text-yellow-50 text-black   fa-solid fa-xmark"></i>
               </button>
             </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
@@ -55,5 +56,10 @@ Route::get('category',[CategoryController::class,'index']);
 Route::get('/wishlist/{userId}',[WishlistController::class,'getByuserId']); //get wishlist through userId
 Route::post('/wishlist/add',[WishlistController::class,'addToWishlist']);   // add to the wishlist
 Route::delete('/wishlist/remove/{id}',[WishlistController::class,'destroy']); //delete from the wishlist
+
+
+//Oders Routes
+Route::get('/orders/{id}',[OrderController::class,'getOrdersByTraderId']);
+Route::post('/order/create',[OrderController::class,'store']);
 
 
