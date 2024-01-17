@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Models\Pet;
 use Illuminate\Support\Facades\Storage;
@@ -17,8 +18,6 @@ class PetController extends Controller
     public function index()
     {
         $pets = Pet::all();
-
-        // Append image URL to each pet object
         $pets->each(function ($pet) {
             $pet->image_url = $this->getImageUrl($pet->image);
         });
@@ -26,11 +25,29 @@ class PetController extends Controller
         return response()->json(['pets' => $pets], 200);
     }
 
-// Helper function to generate image URL
+    public function getVisiblePet(){
+        $pets = Pet::where('isVisible',true)->get();
+        $pets->each(function ($pet) {
+            $pet->image_url = $this->getImageUrl($pet->image);
+        });
+        return response()->json(['pets' => $pets], 200);
+
+
+    }
+
+    public function getPetbyseller($id){
+        $pets = Pet::where('seller_id',$id)->get();
+        $pets->each(function ($pet) {
+            $pet->image_url = $this->getImageUrl($pet->image);
+        });
+        return response()->json(['pets'=>$pets]);
+    }
+
+
+
+
     private function getImageUrl($imageName)
     {
-
-        // Replace 'public/images/' with the actual path to your images within the storage directory
         return Storage::url('images/' . $imageName);
     }
 
@@ -46,16 +63,16 @@ class PetController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric',
             'seller_id' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the uploaded image
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Process image upload
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('public/images', $imageName); // Store the image in storage/app/public/images directory
+            $image->storeAs('public/images', $imageName);
 
-            $validatedData['image'] = $imageName; // Save image name to the 'image' column
+            $validatedData['image'] = $imageName;
         }
 
         // Create a new pet record
@@ -70,22 +87,64 @@ class PetController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $pet = Pet::findOrFail($id);
+            $pet->image_url = $this->getImageUrl($pet->image);
+
+            return response()->json(['pet' => $pet], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Pet not found'], 404);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'name' => 'sometimes|required|string',
+            'description' => 'sometimes|required|string',
+            'price' => 'sometimes|required|numeric',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Find the pet by ID
+        $pet = Pet::findOrFail($id);
+
+        // Process image upload if provided
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('public/images', $imageName);
+
+            $validatedData['image'] = $imageName;
+        }
+
+
+        $pet->fill($validatedData)->save();
+
+        return response()->json(['message' => 'Pet updated successfully'], 200);
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
+
+
     public function destroy(string $id)
     {
-        //
+        try {
+            $pet = Pet::findOrFail($id);
+
+            $pet->delete();
+
+            return response()->json(['message' => 'Pet deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete pet'], 500);
+        }
     }
+
 }
