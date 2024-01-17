@@ -18,6 +18,8 @@ import AdminPets from "./Pages/Admin/AdminPets";
 import PetsSeller from "./Pages/Seller/PetsSeller";
 import Dashboard from "./Pages/Seller/Dashboard";
 import Otp from "./Pages/Customer/LoginSignupPage/Otp";
+import OrderPopup from "./Pages/Customer/Category/OrderPopup";
+import OrderPlacedPage from "./Pages/Customer/Category/OrderPlacePage";
 
 const routeConfig = createBrowserRouter([
   {
@@ -28,7 +30,6 @@ const routeConfig = createBrowserRouter([
     path: "categorie",
     element: <CategoryPage />,
   },
-
   {
     path: "/admin2",
     element: <AdminHeader />,
@@ -61,6 +62,17 @@ const routeConfig = createBrowserRouter([
   {
     path: "/otp/:id",
     element: <Otp/>,
+  },
+  {
+    path: "/checkout/:petId/:sellerId",
+    element: <OrderPopup/>,
+    
+  },
+  {
+    path: "/success/:petId",
+    element: <OrderPlacedPage/>,
+    
+    
   },
 
   //For seller Account 

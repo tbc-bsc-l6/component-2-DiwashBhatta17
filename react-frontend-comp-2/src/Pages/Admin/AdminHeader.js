@@ -1,16 +1,20 @@
 import React from 'react'
 import { BarChart, Wallet, Newspaper, BellRing, Paperclip, Brush, Wrench } from 'lucide-react'
 import { Flip, ToastContainer, toast } from "react-toastify";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
  function AdminHeader() {
+  const navigate = useNavigate()
 
   function handletoast() {
     toast.success("Logged out", {
       position: "top-center",
       transition: Flip,
       autoClose: 2000,
+      
     });
+    localStorage.removeItem('adminId');
+    navigate('/');
   }
 
   return (
@@ -70,7 +74,7 @@ import { Link } from 'react-router-dom';
               href="#"
             >
               <Wrench className="h-5 w-5" aria-hidden="true" />
-              <span className="mx-2 text-sm font-medium">Logout</span>
+              <span onClick={()=>handletoast()} className="mx-2 text-sm font-medium">Logout</span>
             </a>
           </div>
         </nav>

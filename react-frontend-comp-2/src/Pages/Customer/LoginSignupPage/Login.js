@@ -34,8 +34,6 @@ function Login(props) {
 
     // console.log("Login vaiyoooooo");
 
-     toast.success("Succesfully logged In.");
-     window.location.reload();
   };
 
   async function handelClick() {
@@ -52,6 +50,8 @@ function Login(props) {
       try {
         const response = await LoginService(loginDataApi);
         console.log(response.user);
+        toast.success("Succesfully logged In.");
+
 
         if (response.user.role === 0) {
           localStorage.setItem("userId", response.user.id);

@@ -3,11 +3,16 @@ import { Star, ChevronDown } from "lucide-react";
 import getPetbyId from "../../../Services/Users/getPetbyId";
 import imgURL from "../../../Services/Apis/imageurl";
 import OrderPopup from "./OrderPopup";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../../../Services/Redux-Service/counterSlice";
 
 export const ProductDescription = (props) => {
 
     const [data, setData] = useState({});
     const [isOpen, setisOpen] = useState(false);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     
     async function fetchData() {
@@ -16,6 +21,17 @@ export const ProductDescription = (props) => {
         setData(response.pet);        
       } catch (error) {
         
+      }
+    }
+    function handleBuy(){
+      console.log('runn')
+      if (localStorage.getItem("userId")){
+        navigate(`/checkout/${props.id}/${data.seller_id}`);
+
+      }
+      else{
+        dispatch(setLogin(true))
+        navigate('/');
       }
     }
     
@@ -71,9 +87,7 @@ export const ProductDescription = (props) => {
               <button
                 type="button"
                 className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                onClick={() => {
-                  setisOpen(true);
-                }}
+                onClick={()=>handleBuy()}
               >
                 Buy Now
               </button>
@@ -84,7 +98,7 @@ export const ProductDescription = (props) => {
       
 
     </section>
-          <OrderPopup isOpen={isOpen} setisOpen={setisOpen} />
+          {/* <OrderPopup isOpen={isOpen} setisOpen={setisOpen} /> */}
           </>
 
    : "";

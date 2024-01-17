@@ -3,6 +3,8 @@ import { SlideBar } from "./SlideBar";
 import getPetbyId from "../../Services/Seller/getPetbyId";
 import imgURL from "../../Services/Apis/imageurl";
 import AddPetForm from "./AddPetForm";
+import UpdatePetForm from "./UpdatePetForm";
+import deletePetsById from "../../Services/Seller/deletePetsById";
 
 function PetsSeller() {
   const [add, setAdd] = useState(false);
@@ -11,9 +13,11 @@ function PetsSeller() {
   const [pets, setPets] = useState([""]);
   const userId = localStorage.getItem("sellerId");
 
+  const [id, setId] = useState();
+
   useEffect(() => {
     fetchdata();
-  }, []);
+  }, [add,edit]);
   async function fetchdata() {
     try {
       const response = await getPetbyId(userId);
@@ -22,6 +26,16 @@ function PetsSeller() {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  function handleEdit(ids){
+    setId(ids);
+    setEdit(true);
+  }
+  async function handleDelete(ids){
+    const response = await deletePetsById(ids)
+    console.log(response);
+    fetchdata()
   }
   
 
@@ -83,7 +97,7 @@ function PetsSeller() {
                           Price
                         </th>
                         <th scope="col" className="relative px-4 py-3.5">
-                          <span className="sr-only">Edit</span>
+                          <span className="sr-only" >Edit</span>
                         </th>
                       </tr>
                     </thead>
@@ -126,9 +140,12 @@ function PetsSeller() {
                             {pet.price}
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-right text-sm font-medium">
-                            <a href="#" className="text-gray-700">
+                            <button onClick={()=>handleEdit(pet.id)} className="text-gray-700">
                               Edit
-                            </a>
+                            </button>
+                            <button onClick={()=>handleDelete(pet.id)} className="text-gray-700 ml-2">
+                              Delete
+                            </button>
                           </td>
                         </tr>
                       ))}
@@ -140,6 +157,7 @@ function PetsSeller() {
           </div>
         </section>
       </div>
+      <UpdatePetForm edit={edit} id={id} setEdit={setEdit}/>
       <AddPetForm add={add} setAdd={setAdd}/>
     </div>
   );

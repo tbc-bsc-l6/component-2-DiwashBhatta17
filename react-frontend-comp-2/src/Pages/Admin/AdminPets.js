@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import AdminHeader from "./AdminHeader";
 import getAllpets from "../../Services/Admin/getAllpets";
+import imgURL from "../../Services/Apis/imageurl";
+import deletePetsById from "../../Services/Seller/deletePetsById";
 
 function AdminPets() {
 
@@ -22,27 +24,14 @@ function AdminPets() {
       console.error(error);  
     }
   }
+  
+  async function handleDelete(ids){
+    const response = await deletePetsById(ids)
+    console.log(response);
+    fetchdata()
+  }
 
-  const people = [
-    {
-      name: "John Doe",
-      title: "Front-end Developer",
-      department: "Engineering",
-      email: "john@devui.com",
-      role: "Developer",
-      image:
-        "https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80",
-    },
-    {
-      name: "Jane Doe",
-      title: "Back-end Developer",
-      department: "Engineering",
-      email: "jane@devui.com",
-      role: "CTO",
-      image:
-        "https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80",
-    },
-  ];
+  
   return (
     <div className="flex">
       <AdminHeader />
@@ -100,14 +89,14 @@ function AdminPets() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
-                      {pets.map((pet) => (
+                    {pets.map((pet) => (
                         <tr key={pet.id}>
                           <td className="whitespace-nowrap px-4 py-4">
                             <div className="flex items-center">
                               <div className="h-10 w-10 flex-shrink-0">
                                 <img
                                   className="h-10 w-10 rounded-full object-cover"
-                                  src={pet.image_url}
+                                  src={imgURL + pet.image_url}
                                   alt=""
                                 />
                               </div>
@@ -138,9 +127,10 @@ function AdminPets() {
                             {pet.price}
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-right text-sm font-medium">
-                            <a href="#" className="text-gray-700">
-                              Edit
-                            </a>
+                           
+                            <button onClick={()=>handleDelete(pet.id)} className="text-gray-700 ml-2">
+                              Delete
+                            </button>
                           </td>
                         </tr>
                       ))}

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import getAllcategory from '../../Services/Seller/getAllcategory';
 import axios from 'axios';
 import addPet from '../../Services/Seller/addPet';
+import updatePetService from '../../Services/Seller/updatePetService';
+import getPetbyId from '../../Services/Users/getPetbyId';
 import { useNavigate } from 'react-router-dom';
 
-const AddPetForm = (props) => {
-  const userId = localStorage.getItem('sellerId');  
-  const navigate = useNavigate();
+const UpdatePetForm = (props) => {
+  const userId = localStorage.getItem('sellerId'); 
+  const navigate = useNavigate(); 
 
   const [formData, setFormData] = useState({
     name: '',
@@ -17,6 +19,14 @@ const AddPetForm = (props) => {
     seller_id: userId,
   });
 
+  async function fetchData(){
+        console.log("id",props.id)
+    
+        const response = await getPetbyId(props.id);
+        setFormData(response.pet)
+    
+  }
+
   
   const [categories, setCategories] = useState([]);
 
@@ -24,9 +34,15 @@ const AddPetForm = (props) => {
     const response = await getAllcategory();
     setCategories(response.categories);
   }
-  useEffect(()=>{
-    fetchCategory();
-  },[]);
+  useEffect(() => {
+    // Check if props.id has changed
+    if (props.id) {
+      fetchCategory();
+      fetchData();
+      // Update the previous value of props.id
+    }
+  }, [props.id]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,15 +66,11 @@ const AddPetForm = (props) => {
     petData.append('seller_id', userId);
   
     
-    petData.append('image', formData.image);
   
     
     try {
-      const response = await addPet(petData);
+      const response = await updatePetService(props.id,petData);
       console.log(response);
-      props.setAdd(false);
-      navigate('/petsSell');
-
       
       setFormData({
         name: '',
@@ -67,13 +79,17 @@ const AddPetForm = (props) => {
         price: '',
         image: null, 
       });
+      props.setEdit(false)
+      navigate('/petsSell');
+
+
     } catch (error) {
       console.error('Error posting the pet', error);
     }
   };
   
 
-  return (props.add)?
+  return (props.edit)?
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white shadow-md p-8 rounded-md">
         <h2 className="text-2xl font-bold mb-4">Add Pet</h2>
@@ -136,7 +152,7 @@ const AddPetForm = (props) => {
           </div>
           <div className="text-right">
           <button
-          onClick={()=>props.setAdd(false)}
+          onClick={()=>props.setEdit(false)}
               className="px-4 py-2 m-2 bg-black text-white rounded hover:bg-opacity-80 focus:outline-none"
             >
               Cancel
@@ -145,7 +161,7 @@ const AddPetForm = (props) => {
               type="submit"
               className="px-4 py-2 bg-black text-white rounded hover:bg-opacity-80 focus:outline-none"
             >
-              Add Pet
+              Update Pet
             </button>
           </div>
         </form>
@@ -154,4 +170,4 @@ const AddPetForm = (props) => {
   :"";
 };
 
-export default AddPetForm;
+export default UpdatePetForm;
